@@ -1,0 +1,38 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/case/Dockerfile
+        container_name: case_app
+        ports:
+            - "8084:8084"
+        volumes:
+            - .:/app
+        environment:
+            COMPOSER_ALLOW_SUPERUSER: '1'
+        command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8084"]
+        depends_on:
+            - case-db
+        networks:
+            - case-network
+
+    case-db:
+        image: postgres:latest
+        restart: always
+        environment:
+            POSTGRES_DB: 'case'
+            POSTGRES_USER: 'root'
+            POSTGRES_PASSWORD: 'root'
+        ports:
+            - '5433:5432'
+        volumes:
+            - pg-data:/var/lib/postgresql/data
+        networks:
+            - case-network
+
+volumes:
+    pg-data:
+
+networks:
+    case-network:
+
