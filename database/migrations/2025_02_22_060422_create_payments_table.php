@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->string('amount')->nullable();
             $table->enum('status', ['پرداخت شد', 'لغو پرداخت', 'در انتظار پرداخت'])->nullable();
-            $table->enum('payment_method', []);
+            $table->enum('payment_method', ['زرین پال']);
             $table->string('payment_reference')->nullable();
             $table->timestamps();
         });

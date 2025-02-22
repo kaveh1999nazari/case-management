@@ -49,7 +49,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignId('product_attribute_id')->constrained('product_attributes')->onDelete('cascade');
             $table->string('price');
-            $table->enum('price_type', [])->nullable();
+            $table->enum('price_type', ['تخفیفات'])->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->timestamps();
