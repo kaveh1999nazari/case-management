@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class CreateCategorySeeder extends Seeder
@@ -12,6 +12,18 @@ class CreateCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $names = [
+            'قاب موبایل',
+            'لیوان',
+            'لباس',
+            'دفتر',
+            'لبتاب'
+        ];
+        foreach ($names as $name) {
+            Category::query()
+                ->create([
+                    'name' => $name
+                ]);
+        }
     }
 }
