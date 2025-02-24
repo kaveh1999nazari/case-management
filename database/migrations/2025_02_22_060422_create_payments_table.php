@@ -11,15 +11,30 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->string('amount')->nullable();
             $table->enum('status', ['پرداخت شد', 'لغو پرداخت', 'در انتظار پرداخت'])->nullable();
-            $table->enum('payment_method', ['زرین پال']);
-            $table->string('payment_reference')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('amount');
+            $table->string('description')->nullable();
+            $table->string('reference_number')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('amount');
+            $table->string('description')->nullable();
+            $table->enum('payment_method', ['زرین پال']);
+            $table->string('payer_mobile')->nullable();
+            $table->string('model_id')->nullable();
+            $table->string('model_type')->nullable();
+            $table->timestamps();
+        });
+
     }
 
     /**
