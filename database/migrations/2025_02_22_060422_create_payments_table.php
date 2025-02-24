@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->enum('status', ['پرداخت شد', 'لغو پرداخت', 'در انتظار پرداخت'])->nullable();
+            $table->enum('status', ['پرداخت شد', 'لغو پرداخت', 'در انتظار پرداخت']);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('amount');
             $table->string('description')->nullable();
