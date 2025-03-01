@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('mobile')->unique();
-            $table->string('password');
             $table->timestamps();
         });
 
@@ -23,7 +22,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('code')->nullable();
             $table->dateTime('code_expired_at')->nullable();
-            $table->string('token')->nullable();
+            $table->text('token')->nullable();
             $table->timestamps();
         });
     }
