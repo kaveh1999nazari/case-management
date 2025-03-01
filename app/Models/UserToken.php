@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UserToken extends Model
 {
     protected $table = 'user_tokens';
+
     protected $fillable = [
         'user_id',
-        'code'
+        'code',
+        'code_expired_at'
     ];
 
     public function user(): BelongsTo
