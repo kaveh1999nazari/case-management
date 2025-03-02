@@ -9,4 +9,9 @@ Route::controller(\App\Http\Controllers\UserController::class)->group(function (
     Route::post('/confirm-otp', 'confirmOtp');
 });
 
-Route::post('/shop/register', [\App\Http\Controllers\ShopController::class, 'register']);
+Route::controller(\App\Http\Controllers\ShopController::class)->group(function () {
+    Route::post('/shop/register', 'register');
+    Route::post('/shop/login', 'login');
+});
+
+

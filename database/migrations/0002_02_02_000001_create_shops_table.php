@@ -20,6 +20,13 @@ return new class extends Migration
             $table->string('web_address')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('shop_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade');
+            $table->text('token');
+            $table->timestamps();
+        });
     }
 
     /**

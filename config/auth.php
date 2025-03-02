@@ -45,6 +45,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'shop' => [
+            'driver' => 'jwt',
+            'provider' => 'shops'
+        ],
     ],
 
     /*
@@ -69,6 +73,10 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+        'shops' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Shop::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShopCreateRequest;
+use App\Http\Requests\ShopLoginRequest;
 use App\Service\ShopService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,6 +22,15 @@ class ShopController extends Controller
 
         return response()->json([
             'id' => $shop->id
+        ]);
+    }
+
+    public function login(ShopLoginRequest $request): JsonResponse
+    {
+        $token = $this->shopService->login($request->validated());
+
+        return response()->json([
+            'token' => $token
         ]);
     }
 }

@@ -11,4 +11,11 @@ class ShopRepository
         return Shop::query()
             ->create($data);
     }
+
+    public function get(string $userName, string $password)
+    {
+        return Shop::query()
+            ->where('user_name', $userName)
+            ->first();
+    }
 }
