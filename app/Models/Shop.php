@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Shop extends Model implements JWTSubject
+class Shop extends Model implements JWTSubject, AuthenticatableContract
 {
-    use HasFactory;
+    use HasFactory, Authenticatable;
 
     protected $table = 'shops';
 
