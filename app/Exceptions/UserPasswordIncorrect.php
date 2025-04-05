@@ -11,7 +11,7 @@ class UserPasswordIncorrect extends Exception
     {
         return response()->json([
             'message' => 'رمز وارد شده اشتباه است',
-            406
+            'code' => 406
         ]);
     }
 }
