@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('mobile')->unique();
+            $table->string('mobile')->unique()->nullable();
             $table->timestamps();
         });
 
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text('token')->nullable();
             $table->timestamps();
         });
+
+
     }
 
     /**
