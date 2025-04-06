@@ -46,7 +46,7 @@ return [
             'hash' => false,
         ],
         'shop' => [
-            'driver' => 'jwt',
+            'driver' => 'session',
             'provider' => 'shops'
         ],
     ],
