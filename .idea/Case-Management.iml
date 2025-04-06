@@ -121,6 +121,14 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/clock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/jwt" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tymon/jwt-auth" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/actions" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/filament" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/forms" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/infolists" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/notifications" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/support" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/tables" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/filament/widgets" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -2,12 +2,14 @@ FROM php:8.3-cli
 
 RUN apt-get update -y && apt-get install -y \
     openssl \
-    zip \
-    unzip \
-    git \
-    libonig-dev \
-    libzip-dev \
-    libpq-dev
+        zip \
+        unzip \
+        git \
+        libonig-dev \
+        libzip-dev \
+        libpq-dev \
+        libicu-dev \
+        && docker-php-ext-install intl zip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
