@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Shop extends Model implements JWTSubject, AuthenticatableContract
+class Shop extends Model implements FilamentUser, AuthenticatableContract
 {
     use HasFactory, Authenticatable;
 
@@ -22,6 +23,10 @@ class Shop extends Model implements JWTSubject, AuthenticatableContract
         'web_address'
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -29,13 +34,8 @@ class Shop extends Model implements JWTSubject, AuthenticatableContract
         ];
     }
 
-    public function getJWTIdentifier()
+    public function canAccessPanel(Panel $panel): bool
     {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims(): array
-    {
-        return [];
+        return true;
     }
 }
