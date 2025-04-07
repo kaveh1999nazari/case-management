@@ -18,18 +18,14 @@ class CreateAttributeValueSeeder extends Seeder
             'متریال' => ['Plastic', 'Silicone', 'Leather', 'Metal', 'Wood'],
             'سایز' => ['Small', 'Medium', 'Large'],
             'طرح' => ['Minimalist', 'Cartoon', 'Futuristic', 'Vintage', 'Luxury'],
-            'Texture' => ['Smooth', 'Matte', 'Glossy', 'Embossed'],
-            'Theme' => ['Anime', 'Superhero', 'Nature', 'Gaming', 'Tech'],
+            'بافت' => ['Smooth', 'Matte', 'Glossy', 'Embossed'],
+            'زمینه' => ['Anime', 'Superhero', 'Nature', 'Gaming', 'Tech'],
         ];
 
         foreach ($attributes as $attributeTitle => $values) {
             $attribute = Attribute::query()
                 ->where('title', $attributeTitle)
                 ->first();
-
-            if (!$attribute) {
-                continue;
-            }
 
             foreach ($values as $value) {
                 AttributeValue::query()

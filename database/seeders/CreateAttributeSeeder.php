@@ -14,14 +14,12 @@ class CreateAttributeSeeder extends Seeder
     public function run(): void
     {
         $attributes = [
-            'Color',
-            'Material',
-            'Pattern',
-            'Size',
-            'Design',
-            'Capacity',
-            'Texture',
-            'Theme',
+            'رنگ',
+            'متریال',
+            'سایز',
+            'طرح',
+            'بافت',
+            'زمینه',
         ];
 
         foreach ($attributes as $title) {
