@@ -14,4 +14,8 @@ Route::controller(\App\Http\Controllers\ShopController::class)->group(function (
     Route::post('/shop/login', 'login');
 });
 
+Route::controller(\App\Http\Controllers\CategoryController::class)->group(function () {
+    Route::post('/category/create', 'create');
+});
+
 
