@@ -15,4 +15,19 @@ class Product extends Model
         'description',
         'stock_quantity'
     ];
+
+    public function productDetail(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\ProductDetail::class);
+    }
+
+    public function productAttributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\ProductAttribute::class);
+    }
+
+    public function productPrices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\ProductPrice::class);
+    }
 }
