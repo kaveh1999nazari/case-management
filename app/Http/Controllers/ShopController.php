@@ -24,13 +24,4 @@ class ShopController extends Controller
             'id' => $shop->id
         ]);
     }
-
-    public function login(ShopLoginRequest $request): JsonResponse
-    {
-        $token = $this->shopService->login($request->validated());
-
-        return response()->json([
-            'token' => $token
-        ]);
-    }
 }
