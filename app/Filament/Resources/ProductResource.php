@@ -29,12 +29,17 @@ class ProductResource extends Resource
                     ->label('دسته‌بندی محصول')
                     ->options(Category::all()->pluck('name', 'id')->toArray())
                     ->required(),
-                Forms\Components\TextInput::make('name')->label('نام محصول')->required(),
+
+                Forms\Components\TextInput::make('name')
+                        ->label('نام محصول')
+                        ->required(),
+
                 Select::make('product_detail.brand_id')
                     ->label('برند')
                     ->options(\App\Models\Brand::all()->pluck('name', 'id'))
                     ->reactive()
                     ->required(),
+
                 Select::make('product_detail.model_id')
                     ->label('مدل')
                     ->options(function (callable $get) {
@@ -47,6 +52,7 @@ class ProductResource extends Resource
                                 ->where('brand_id', $brandId)->pluck('name', 'id')->toArray();
                     })
                     ->required(),
+
                 Repeater::make('product_attributes')
                     ->label('ویژگی‌های محصول')
                     ->schema([
@@ -75,22 +81,15 @@ class ProductResource extends Resource
                             })
                             ->reactive()
                             ->required()
-                            ->default(function (callable $get) {
-                                $attributeId = $get('attribute_id');
-                                if (!$attributeId) {
-                                    return null;
-                                }
-
-                                return \App\Models\AttributeValue::query()
-                                    ->where('attribute_id', $attributeId)->first()->id ?? null;
-                            }),
                     ])
                     ->minItems(1)
                     ->columns(2),
+
                 Forms\Components\TextInput::make('product_prices')
                     ->label('قیمت محصول')
                     ->helperText('به ریال وارد کنید')
                     ->required(),
+
                 Forms\Components\TextInput::make('stock_quantity')
                     ->label('موجودی انبار')
                     ->numeric()
@@ -102,6 +101,7 @@ class ProductResource extends Resource
                             }
                         },
                     ]),
+
                 Forms\Components\TextInput::make('description')
                     ->label('توضیحات')
                     ->placeholder('توضیحات محصولات خود را بنویسید')
