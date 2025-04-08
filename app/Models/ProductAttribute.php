@@ -29,4 +29,9 @@ class ProductAttribute extends Model
     {
         return $this->belongsTo(AttributeValue::class);
     }
+
+    public function price(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ProductPrice::class);
+    }
 }
