@@ -30,6 +30,15 @@ class CreateProduct extends CreateRecord
                 'price' => $this->form->getState()['product_prices'],
                 'product_attribute_id' => $productAttribute->id,
             ]);
+
+            $productImages = $this->form->getState()['product_images'];
+
+            foreach ($productImages as $img) {
+                if (isset($img['url'])) {
+                    $product->productImages()->create(['url' => $img['url']]);
+                }
+            }
+
         }
     }
 

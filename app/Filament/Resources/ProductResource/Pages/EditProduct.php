@@ -11,6 +11,29 @@ class EditProduct extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $product = $this->record;
+
+        $data['product_detail'] = $product->productDetail ? $product->productDetail->toArray() : [];
+
+        $data['product_attributes'] = $product->productAttributes->map(function ($attr) {
+            return [
+                'attribute_id' => $attr->attribute_id,
+                'attribute_value_id' => $attr->attribute_value_id,
+            ];
+        })->toArray();
+
+        $firstPrice = $product->productPrices->first();
+        $data['product_prices'] = $firstPrice ? $firstPrice->price : null;
+
+        $data['product_images'] = $product->productImages->map(function ($img) {
+            return ['url' => $img->url];
+        })->toArray();
+
+        return $data;
+    }
+
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $data['shop_id'] = Auth::guard('shop')->id();
@@ -46,6 +69,14 @@ class EditProduct extends EditRecord
                     ['product_attribute_id' => $productAttribute->id],
                     ['price' => $this->form->getState()['product_prices']]
                 );
+
+                $productImages = $this->form->getState()['product_images'];
+
+                foreach ($productImages as $img) {
+                    if (isset($img['url'])) {
+                        $product->productImages()->updateOrCreate(['url' => $img['url']]);
+                    }
+                }
             }
         }
     }
