@@ -57,12 +57,37 @@ class ProductResource extends Resource
                         Select::make('attribute_id')
                             ->label('ویژگی')
                             ->options(\App\Models\Attribute::all()->pluck('title', 'id'))
-                            ->required(),
+                            ->reactive()
+                            ->required()
+                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                $set('attribute_value_id', null);
+                            }),
 
                         Select::make('attribute_value_id')
                             ->label('مقدار ویژگی')
-                            ->options(\App\Models\AttributeValue::all()->pluck('value', 'id'))
-                            ->required(),
+                            ->options(function (callable $get) {
+                                $attributeId = $get('attribute_id');
+
+                                if (!$attributeId) {
+                                    return [];
+                                }
+
+                                return \App\Models\AttributeValue::query()
+                                    ->where('attribute_id', $attributeId)
+                                    ->pluck('value', 'id')
+                                    ->toArray();
+                            })
+                            ->reactive()
+                            ->required()
+                            ->default(function (callable $get) {
+                                $attributeId = $get('attribute_id');
+                                if (!$attributeId) {
+                                    return null;
+                                }
+
+                                return \App\Models\AttributeValue::query()
+                                    ->where('attribute_id', $attributeId)->first()->id ?? null;
+                            }),
                     ])
                     ->minItems(1)
                     ->columns(2),
