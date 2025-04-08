@@ -44,32 +44,36 @@ class ProductResource extends Resource
                     ->label('مدل')
                     ->options(function (callable $get) {
                         $brandId = $get('product_detail.brand_id');
+
                         if (!$brandId) {
                             return [];
                         }
 
                         return \App\Models\Models::query()
-                                ->where('brand_id', $brandId)->pluck('name', 'id')->toArray();
+                            ->where('brand_id', $brandId)
+                            ->pluck('name', 'id')
+                            ->toArray();
                     })
+                    ->reactive()
                     ->required(),
 
+
                 Repeater::make('product_attributes')
-                    ->label('ویژگی‌های محصول')
+                ->label('ویژگی‌های محصول')
                     ->schema([
                         Select::make('attribute_id')
-                            ->label('ویژگی')
+                        ->label('ویژگی')
                             ->options(\App\Models\Attribute::all()->pluck('title', 'id'))
-                            ->reactive()
                             ->required()
-                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, callable $set) {
                                 $set('attribute_value_id', null);
                             }),
 
                         Select::make('attribute_value_id')
-                            ->label('مقدار ویژگی')
+                        ->label('مقدار ویژگی')
                             ->options(function (callable $get) {
                                 $attributeId = $get('attribute_id');
-
                                 if (!$attributeId) {
                                     return [];
                                 }
@@ -79,8 +83,8 @@ class ProductResource extends Resource
                                     ->pluck('value', 'id')
                                     ->toArray();
                             })
-                            ->reactive()
                             ->required()
+                            ->reactive()
                     ])
                     ->minItems(1)
                     ->columns(2),
@@ -89,6 +93,10 @@ class ProductResource extends Resource
                     ->label('قیمت محصول')
                     ->helperText('به ریال وارد کنید')
                     ->required(),
+
+                Forms\Components\TextInput::make('product_images')
+                                    ->label('تصویر محصول')
+                                    ->helperText('لطفا لینک اپلود شده تصویر را وارد کنید'),
 
                 Forms\Components\TextInput::make('stock_quantity')
                     ->label('موجودی انبار')
