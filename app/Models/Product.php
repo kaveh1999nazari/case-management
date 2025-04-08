@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(\App\Models\ProductImage::class);
     }
+
+    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Shop::class);
+    }
 }

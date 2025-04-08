@@ -38,4 +38,9 @@ class Shop extends Model implements FilamentUser, AuthenticatableContract
     {
         return true;
     }
+
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 }
