@@ -118,7 +118,6 @@ class ProductResource extends Resource
             ->columns([
                 TextColumn::make('name')->label('نام محصول')->searchable(),
                 TextColumn::make('stock_quantity')->label('موجودی'),
-                TextColumn::make('category_id')->label('دسته‌بندی'),
             ])
             ->filters([
                 //
