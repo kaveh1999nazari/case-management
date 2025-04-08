@@ -43,7 +43,8 @@ class ProductResource extends Resource
                             return [];
                         }
 
-                        return \App\Models\Models::where('brand_id', $brandId)->pluck('name', 'id')->toArray();
+                        return \App\Models\Models::query()
+                                ->where('brand_id', $brandId)->pluck('name', 'id')->toArray();
                     })
                     ->required(),
                 Repeater::make('product_attributes')
