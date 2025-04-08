@@ -30,4 +30,9 @@ class Product extends Model
     {
         return $this->hasMany(\App\Models\ProductPrice::class);
     }
+
+    public function productImages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\ProductImage::class);
+    }
 }
