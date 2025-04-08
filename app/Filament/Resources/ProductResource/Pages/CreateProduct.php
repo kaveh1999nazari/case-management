@@ -21,14 +21,11 @@ class CreateProduct extends CreateRecord
     {
         $product = $this->record;
 
-        // ذخیره product_detail
         $product->productDetail()->create($this->form->getState()['product_detail']);
 
-        // ذخیره product_attributes
         foreach ($this->form->getState()['product_attributes'] as $attr) {
             $productAttribute = $product->productAttributes()->create($attr);
 
-            // وصل کردن قیمت‌ها به ویژگی
             $product->productPrices()->create([
                 'price' => $this->form->getState()['product_prices'],
                 'product_attribute_id' => $productAttribute->id,
