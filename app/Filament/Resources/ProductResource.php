@@ -57,7 +57,6 @@ class ProductResource extends Resource
                     ->reactive()
                     ->required(),
 
-
                 Repeater::make('product_attributes')
                 ->label('ویژگی‌های محصول')
                     ->schema([
@@ -94,9 +93,18 @@ class ProductResource extends Resource
                     ->helperText('به ریال وارد کنید')
                     ->required(),
 
-                Forms\Components\TextInput::make('product_images')
-                                    ->label('تصویر محصول')
-                                    ->helperText('لطفا لینک اپلود شده تصویر را وارد کنید'),
+                Repeater::make('product_images')
+                    ->label('تصاویر محصول')
+                    ->schema([
+                        Forms\Components\TextInput::make('url')
+                            ->label('آدرس تصویر')
+                            ->required()
+                    ])
+                    ->minItems(1)
+                    ->addActionLabel('افزودن تصویر جدید')
+                    ->columns(1)
+                    ->required()
+                    ->helperText('لطفا لینک‌های آپلود شده تصاویر را وارد کنید'),
 
                 Forms\Components\TextInput::make('stock_quantity')
                     ->label('موجودی انبار')
