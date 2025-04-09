@@ -2,11 +2,9 @@
 
 namespace App\Service;
 
-use App\Models\Product;
 use App\Models\ProductPrice;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
-use App\Repository\ProductRepository;
 
 class OrderService
 {
