@@ -47,7 +47,6 @@ return new class extends Migration
         Schema::create('product_prices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('product_attribute_id')->constrained('product_attributes')->onDelete('cascade');
             $table->string('price');
             $table->enum('price_type', ['تخفیفات'])->nullable();
             $table->date('start_date')->nullable();
