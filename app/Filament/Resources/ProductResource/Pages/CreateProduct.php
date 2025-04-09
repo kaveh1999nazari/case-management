@@ -25,21 +25,21 @@ class CreateProduct extends CreateRecord
 
         foreach ($this->form->getState()['product_attributes'] as $attr) {
             $productAttribute = $product->productAttributes()->create($attr);
-
-            $product->productPrices()->create([
-                'price' => $this->form->getState()['product_prices'],
-                'product_attribute_id' => $productAttribute->id,
-            ]);
-
-            $productImages = $this->form->getState()['product_images'];
-
-            foreach ($productImages as $img) {
-                if (isset($img['url'])) {
-                    $product->productImages()->create(['url' => $img['url']]);
-                }
-            }
-
         }
+
+        $product->productPrices()->create([
+            'price' => $this->form->getState()['product_prices'],
+        ]);
+
+        $productImages = $this->form->getState()['product_images'];
+
+        foreach ($productImages as $img) {
+            if (isset($img['url'])) {
+                $product->productImages()->create(['url' => $img['url']]);
+            }
+        }
+
+
     }
 
 }
