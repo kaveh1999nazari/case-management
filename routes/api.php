@@ -18,4 +18,8 @@ Route::controller(\App\Http\Controllers\CategoryController::class)->group(functi
     Route::post('/category/create', 'create');
 });
 
+Route::controller(\App\Http\Controllers\OrderController::class)->group(function () {
+    Route::post('/order/create', 'create');
+});
+
 
