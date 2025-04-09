@@ -17,30 +17,34 @@ class OrderService
     )
     {
     }
-    public function create(array $data): void
+    public function create(array $data): \App\Models\Order
     {
         $totalPrice = 0;
         $orderItems = [];
 
         foreach ($data['items'] as $item) {
-            $product = ProductPrice::query()
-                ->find($item['product_id']);
-            $itemTotalPrice = $product->price * $item['quantity'];
+            $productPrice = ProductPrice::query()
+                ->where('product_id', $item['product_id'])
+                ->latest('id')
+                ->first();
 
+            $itemTotalPrice = $productPrice->price * $item['quantity'];
             $totalPrice += $itemTotalPrice;
 
             $orderItems[] = [
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
-                'custom_image' => $item['custom_image'],
+                'custom_image' => $item['custom_image'] ?? [],
                 'total_price' => $itemTotalPrice,
             ];
         }
 
         $order = $this->orderRepository->create($data, $totalPrice);
 
-        foreach ($orderItems as $orderItem) {
-            $this->orderItemRepository->create($orderItem, $order->id);
+        foreach ($orderItems as $item) {
+            $this->orderItemRepository->create($item, $order->id);
         }
+
+        return $order;
     }
 }

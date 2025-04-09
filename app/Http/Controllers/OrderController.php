@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderCreateRequest;
 use App\Service\OrderService;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -16,10 +15,10 @@ class OrderController extends Controller
 
     public function create(OrderCreateRequest $request): \Illuminate\Http\JsonResponse
     {
-        $this->orderService->create($request->validated());
+        $order = $this->orderService->create($request->validated());
 
         return response()->json([
-            'message' => 'سفارش با موفقیت ثبت شد'],
-            201);
+            'message' => ['id' => $order->id],
+            'status' => 201]);
     }
 }

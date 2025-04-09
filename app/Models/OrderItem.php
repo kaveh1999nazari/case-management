@@ -17,6 +17,10 @@ class OrderItem extends Model
         'total_price'
     ];
 
+    protected $casts = [
+        'custom_image' => 'array',
+    ];
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
