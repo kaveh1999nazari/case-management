@@ -46,38 +46,34 @@ class EditProduct extends EditRecord
 
         $product->productDetail()->update($this->form->getState()['product_detail']);
 
-        if (isset($this->form->getState()['product_attributes'])) {
-            foreach ($this->form->getState()['product_attributes'] as $attr) {
-                $productAttribute = $product->productAttributes()
-                    ->where('attribute_id', $attr['attribute_id'])
-                    ->first();
+        foreach ($this->form->getState()['product_attributes'] as $attr) {
+            $productAttribute = $product->productAttributes()
+                ->where('attribute_id', $attr['attribute_id'])
+                ->first();
 
-                if ($productAttribute) {
-                    if ($productAttribute->attribute_value_id !== $attr['attribute_value_id']) {
-                        $productAttribute->update([
-                            'attribute_value_id' => $attr['attribute_value_id']
-                        ]);
-                    }
-                } else {
-                    $productAttribute = $product->productAttributes()->create([
-                        'attribute_id' => $attr['attribute_id'],
+            if ($productAttribute) {
+                if ($productAttribute->attribute_value_id !== $attr['attribute_value_id']) {
+                    $productAttribute->update([
                         'attribute_value_id' => $attr['attribute_value_id']
                     ]);
                 }
+            } else {
+                $productAttribute = $product->productAttributes()->create([
+                    'attribute_id' => $attr['attribute_id'],
+                    'attribute_value_id' => $attr['attribute_value_id']
+                ]);
+            }
+        }
 
-                $product->productPrices()->updateOrCreate(
-                    ['product_attribute_id' => $productAttribute->id],
-                    ['price' => $this->form->getState()['product_prices']]
-                );
+        $product->productPrices()->update(['price' => $this->form->getState()['product_prices']]);
 
-                $productImages = $this->form->getState()['product_images'];
+        $productImages = $this->form->getState()['product_images'];
 
-                foreach ($productImages as $img) {
-                    if (isset($img['url'])) {
-                        $product->productImages()->updateOrCreate(['url' => $img['url']]);
-                    }
-                }
+        foreach ($productImages as $img) {
+            if (isset($img['url'])) {
+                $product->productImages()->updateOrCreate(['url' => $img['url']]);
             }
         }
     }
+
 }
