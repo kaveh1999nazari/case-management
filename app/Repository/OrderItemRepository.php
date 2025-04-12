@@ -10,6 +10,7 @@ class OrderItemRepository
     {
         OrderItem::query()->create([
             'order_id' => $orderId,
+            'shop_id' =>  $item['shop_id'],
             'product_id' => $item['product_id'],
             'quantity' => $item['quantity'],
             'custom_image' => $item['custom_image'],

@@ -2,16 +2,19 @@
 
 namespace App\Service;
 
-use App\Models\ProductPrice;
+use App\Exceptions\ProductNotFound;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
+use App\Repository\ProductPriceRepository;
+use App\Repository\ProductRepository;
 
 class OrderService
 {
     public function __construct(
         private readonly OrderRepository $orderRepository,
         private readonly OrderItemRepository $orderItemRepository,
-
+        private readonly ProductRepository $productRepository,
+        private readonly ProductPriceRepository $productPriceRepository,
     )
     {
     }
@@ -21,15 +24,21 @@ class OrderService
         $orderItems = [];
 
         foreach ($data['items'] as $item) {
-            $productPrice = ProductPrice::query()
-                ->where('product_id', $item['product_id'])
-                ->latest('id')
-                ->first();
+
+            $product = $this->productRepository->getById($item['product_id']);
+
+
+            $productPrice = $this->productPriceRepository->getPriceByProductId($item['product_id']);
+
+            if (! $product || ! $productPrice) {
+                throw new ProductNotFound();
+            }
 
             $itemTotalPrice = $productPrice->price * $item['quantity'];
             $totalPrice += $itemTotalPrice;
 
             $orderItems[] = [
+                'shop_id' => $product->shop_id,
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
                 'custom_image' => $item['custom_image'] ?? [],

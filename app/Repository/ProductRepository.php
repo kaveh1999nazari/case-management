@@ -6,10 +6,9 @@ use App\Models\Product;
 
 class ProductRepository
 {
-    public function totalPrice(array $productIds)
+    public function getById(int $productId)
     {
         return  Product::query()
-            ->whereIn('id', $productIds)
-            ->sum('price');
+            ->find($productId);
     }
 }

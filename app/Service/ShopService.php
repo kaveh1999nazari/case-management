@@ -2,12 +2,7 @@
 
 namespace App\Service;
 
-use App\Exceptions\ShopNotValidPassword;
-use App\Exceptions\ShopNotValidUserName;
 use App\Repository\ShopRepository;
-use App\Repository\ShopTokenRepository;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 
 class ShopService
 {
