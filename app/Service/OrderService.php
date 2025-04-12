@@ -27,7 +27,6 @@ class OrderService
 
             $product = $this->productRepository->getById($item['product_id']);
 
-
             $productPrice = $this->productPriceRepository->getPriceByProductId($item['product_id']);
 
             if (! $product || ! $productPrice) {
