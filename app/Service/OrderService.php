@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Exceptions\ProductNotFound;
+use App\Exceptions\ProductOutOfStock;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductPriceRepository;
@@ -14,10 +15,16 @@ class OrderService
         private readonly OrderRepository $orderRepository,
         private readonly OrderItemRepository $orderItemRepository,
         private readonly ProductRepository $productRepository,
+        private readonly ProductService $productService,
         private readonly ProductPriceRepository $productPriceRepository,
     )
     {
     }
+
+    /**
+     * @throws ProductOutOfStock
+     * @throws ProductNotFound
+     */
     public function create(array $data): \App\Models\Order
     {
         $totalPrice = 0;
@@ -35,6 +42,8 @@ class OrderService
 
             $itemTotalPrice = $productPrice->price * $item['quantity'];
             $totalPrice += $itemTotalPrice;
+
+            $this->productService->updateStock($item['product_id'], $item['quantity']);
 
             $orderItems[] = [
                 'shop_id' => $product->shop_id,
