@@ -8,9 +8,12 @@ use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductPriceRepository;
 use App\Repository\ProductRepository;
+use App\Traits\AuthenticatesUser;
 
 class OrderService
 {
+    use AuthenticatesUser;
+
     public function __construct(
         private readonly OrderRepository $orderRepository,
         private readonly OrderItemRepository $orderItemRepository,
@@ -29,6 +32,8 @@ class OrderService
     {
         $totalPrice = 0;
         $orderItems = [];
+
+        $user = $this->getAuthenticatedUserOrFail();
 
         foreach ($data['items'] as $item) {
 
@@ -54,7 +59,7 @@ class OrderService
             ];
         }
 
-        $order = $this->orderRepository->create($data, $totalPrice);
+        $order = $this->orderRepository->create($data, $totalPrice, $user);
 
         foreach ($orderItems as $item) {
             $this->orderItemRepository->create($item, $order->id);
