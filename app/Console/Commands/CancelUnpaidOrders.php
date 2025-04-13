@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Order;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
-
 
 class CancelUnpaidOrders extends Command
 {
@@ -24,9 +22,6 @@ class CancelUnpaidOrders extends Command
      */
     public function handle()
     {
-        Log::info('🕒 شروع اجرای cancel:unpaid-orders');
-//        Log::info('cancel:unpaid-orders started running...');
-
         $expiredOrders = Order::query()
             ->where('order_status', 'پرداخت نشده')
             ->where('created_at', '<=', now()->subMinutes(15))
