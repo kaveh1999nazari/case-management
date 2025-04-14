@@ -91,7 +91,14 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('product_prices')
                     ->label('قیمت محصول')
                     ->helperText('به ریال وارد کنید')
-                    ->required(),
+                    ->required()
+                    ->formatStateUsing(function ($state) {
+                        return number_format($state);
+                    })
+                    ->dehydrateStateUsing(function ($state) {
+                        return str_replace(',', '', $state);
+                    })
+                    ->extraInputAttributes(['inputmode' => 'numeric']),
 
                 Repeater::make('product_images')
                     ->label('تصاویر محصول')
