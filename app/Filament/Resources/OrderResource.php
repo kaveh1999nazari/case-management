@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Models\Address;
 use App\Models\Order;
 use Carbon\Carbon;
 use Filament\Forms;
@@ -64,6 +65,26 @@ class OrderResource extends Resource
                     ->columnSpanFull()
                     ->disabled(),
 
+                Select::make('address_id')
+                    ->label('آدرس')
+                    ->options(Address::all()->pluck('address', 'id'))
+                    ->disabled(),
+
+                Select::make('address_id')
+                    ->label('موبایل گیرنده')
+                    ->options(Address::all()->pluck('mobile', 'id'))
+                    ->disabled(),
+
+                Select::make('address_id')
+                    ->label('کد پستی')
+                    ->options(Address::all()->pluck('postal_code', 'id'))
+                    ->disabled(),
+
+                Select::make('address_id')
+                    ->label('نام دریافت کننده')
+                    ->options(Address::all()->pluck('recipient_name', 'id'))
+                    ->disabled(),
+
                 TextInput::make('final_price')
                     ->label('قیمت نهایی')
                     ->disabled()
@@ -71,6 +92,7 @@ class OrderResource extends Resource
                         return number_format($state);
                     })
                     ->formatStateUsing(fn ($state) => number_format($state) . ' ریال'),
+
                 Select::make('order_status')
                     ->label('وضعیت سفارش')
                     ->options([
@@ -83,7 +105,7 @@ class OrderResource extends Resource
                     ->required(),
 
                 TextInput::make('created_at')
-                    ->label('زمان سفارش')
+                    ->label('تاریخ ثبت سفارش')
                     ->disabled()
                     ->formatStateUsing(function ($state) {
                         if (!$state) return '-';
