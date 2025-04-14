@@ -10,10 +10,17 @@ class EditOrder extends EditRecord
 {
     protected static string $resource = OrderResource::class;
 
-    protected function getHeaderActions(): array
+    protected function mutateFormDataBeforeFill(array $data): array
     {
-        return [
-//            Actions\DeleteAction::make(),
-        ];
+        $order = $this->record;
+
+        $data['order_items'] = $order->orderItems->map(function ($item) {
+            return [
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+            ];
+        })->toArray();
+
+        return $data;
     }
 }
