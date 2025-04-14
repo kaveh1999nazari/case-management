@@ -25,6 +25,7 @@ class Login extends BaseLogin
 
                 TextInput::make('password')
                     ->label('رمز عبور')
+                    ->password()
                     ->required()
                     ->autocomplete('current-password'),
             ]);
