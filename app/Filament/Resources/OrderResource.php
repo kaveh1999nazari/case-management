@@ -151,4 +151,14 @@ class OrderResource extends Resource
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return 'سفارش';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'سفارش‌ها';
+    }
 }
